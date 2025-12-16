@@ -1,13 +1,13 @@
-package com.totvs.accounting_service;
+package com.totvs.contas_service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class AccountingServiceApplication {
+public class ContasServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(AccountingServiceApplication.class, args);
+		SpringApplication.run(ContasServiceApplication.class, args);
 	}
 
 }

@@ -1,0 +1,46 @@
+services:
+
+  # Database image
+  postgres_app:
+    image: postgres:16-alpine
+    container_name: postgres_db
+    environment:
+      POSTGRES_DB: appdb
+      POSTGRES_USER: appuser
+      POSTGRES_PASSWORD: apppassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U appuser -d appdb"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+    restart: always
+
+  # Application image
+  app:
+    build: .
+    container_name: bills-service
+    ports:
+      - "8081:8083"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres_app:5432/appdb
+      SPRING_DATASOURCE_URL_FLYWAY: jdbc:postgresql://postgres_app:5432/appdb
+      SPRING_DATASOURCE_USERNAME: appuser
+      SPRING_DATASOURCE_PASSWORD: apppassword
+    networks:
+      - app-network
+    depends_on:
+      postgres_app:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+
+networks:
+  app-network:
+    driver: bridge

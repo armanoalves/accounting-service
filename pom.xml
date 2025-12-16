@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.totvs</groupId>
-	<artifactId>accounting-service</artifactId>
+	<artifactId>contas-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>accounting-service</name>
+	<name>contas-service</name>
 	<description>Projeto proveniente de um desafio técnico para uma vaga de desenvolvor Backend na TOTVS. O projeto fará o gerenciamento de contas que devem ser pagas, com um CRUD geral, alteração de estatos de contas e importação de um arquivo de contas.</description>
 	<url/>
 	<licenses>
