@@ -1,4 +1,4 @@
-package com.totvs.contas_service;
+package com.totvs.contasservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

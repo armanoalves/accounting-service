@@ -1,4 +1,4 @@
-CREATE TABLE lancamentos (
+CREATE TABLE contas (
     id BIGSERIAL PRIMARY KEY,
     data_vencimento DATE NOT NULL,
     data_pagamento DATE,

@@ -1,4 +1,4 @@
-package com.totvs.contas_service;
+package com.totvs.contasservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
