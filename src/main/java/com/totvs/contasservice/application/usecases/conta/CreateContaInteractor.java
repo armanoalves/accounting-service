@@ -1,13 +1,13 @@
-package com.totvs.contasservice.application.usecases;
+package com.totvs.contasservice.application.usecases.conta;
 
 import com.totvs.contasservice.application.gateways.ContaGateway;
 import com.totvs.contasservice.domain.entity.Conta;
 
-public class CreateContaInterector {
+public class CreateContaInteractor {
 
     private final ContaGateway contaGateway;
 
-    public CreateContaInterector(ContaGateway contaGateway) {
+    public CreateContaInteractor(ContaGateway contaGateway) {
         this.contaGateway = contaGateway;
     }
 

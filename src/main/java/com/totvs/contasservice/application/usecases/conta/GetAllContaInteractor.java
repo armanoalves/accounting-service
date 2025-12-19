@@ -1,4 +1,4 @@
-package com.totvs.contasservice.application.usecases;
+package com.totvs.contasservice.application.usecases.conta;
 
 import com.totvs.contasservice.application.gateways.ContaGateway;
 import com.totvs.contasservice.domain.entity.Conta;
@@ -6,11 +6,11 @@ import com.totvs.contasservice.domain.entity.ContaFiltro;
 
 import java.util.List;
 
-public class GetAllContaInterector {
+public class GetAllContaInteractor {
 
     private final ContaGateway contaGateway;
 
-    public GetAllContaInterector(ContaGateway contaGateway) {
+    public GetAllContaInteractor(ContaGateway contaGateway) {
         this.contaGateway = contaGateway;
     }
 

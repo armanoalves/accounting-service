@@ -1,11 +1,13 @@
 package com.totvs.contasservice.infrastructure.controllers;
 
-import com.totvs.contasservice.application.usecases.*;
+import com.totvs.contasservice.application.usecases.conta.*;
 import com.totvs.contasservice.domain.entity.Conta;
 import com.totvs.contasservice.domain.entity.ContaFiltro;
 import com.totvs.contasservice.infrastructure.controllers.dto.ContaRequest;
 import com.totvs.contasservice.infrastructure.controllers.dto.ContaResponse;
 import com.totvs.contasservice.infrastructure.controllers.dto.TotalPagoResponse;
+import com.totvs.contasservice.infrastructure.controllers.dto.mappers.ContaDTOMapper;
+import com.totvs.contasservice.infrastructure.controllers.dto.mappers.TotalPagoMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -23,30 +25,30 @@ import java.util.List;
 @RequestMapping("contas")
 public class ContaController {
 
-    private final CreateContaInterector createContaInterector;
-    private final GetAllContaInterector getAllContaInterector;
-    private final GetByIdContaInterector getByIdContaInterector;
-    private final UpdateContaInterector updateContaInterector;
-    private final DeleteContaInterector deleteContaInterector;
+    private final CreateContaInteractor createContaInteractor;
+    private final GetAllContaInteractor getAllContaInteractor;
+    private final GetByIdContaInteractor getByIdContaInteractor;
+    private final UpdateContaInteractor updateContaInteractor;
+    private final DeleteContaInteractor deleteContaInteractor;
     private final ImportContasFromCsvInteractor importContasFromCsvInteractor;
     private final GetValorTotalPagoPorPeriodoInteractor getValorTotalPagoPorPeriodoInteractor;
     private final ContaDTOMapper contaDTOMapper;
     private final TotalPagoMapper totalPagoMapper;
 
-    public ContaController(CreateContaInterector createContaInterector,
+    public ContaController(CreateContaInteractor createContaInteractor,
                            ContaDTOMapper contaDTOMapper,
                            TotalPagoMapper totalPagoMapper,
-                           GetAllContaInterector getAllContaInterector,
-                           GetByIdContaInterector getByIdContaInterector,
-                           UpdateContaInterector updateContaInterector,
-                           DeleteContaInterector deleteContaInterector,
+                           GetAllContaInteractor getAllContaInteractor,
+                           GetByIdContaInteractor getByIdContaInteractor,
+                           UpdateContaInteractor updateContaInteractor,
+                           DeleteContaInteractor deleteContaInteractor,
                            ImportContasFromCsvInteractor importContasFromCsvInteractor,
                            GetValorTotalPagoPorPeriodoInteractor getValorTotalPagoPorPeriodoInteractor) {
-        this.createContaInterector = createContaInterector;
-        this.getAllContaInterector = getAllContaInterector;
-        this.getByIdContaInterector = getByIdContaInterector;
-        this.updateContaInterector = updateContaInterector;
-        this.deleteContaInterector = deleteContaInterector;
+        this.createContaInteractor = createContaInteractor;
+        this.getAllContaInteractor = getAllContaInteractor;
+        this.getByIdContaInteractor = getByIdContaInteractor;
+        this.updateContaInteractor = updateContaInteractor;
+        this.deleteContaInteractor = deleteContaInteractor;
         this.importContasFromCsvInteractor = importContasFromCsvInteractor;
         this.getValorTotalPagoPorPeriodoInteractor = getValorTotalPagoPorPeriodoInteractor;
         this.contaDTOMapper = contaDTOMapper;
@@ -56,7 +58,7 @@ public class ContaController {
     @PostMapping
     ResponseEntity<ContaResponse> create(@RequestBody ContaRequest request) {
         Conta contaBusinessObj = contaDTOMapper.toConta(request);
-        Conta conta = createContaInterector.createConta(contaBusinessObj);
+        Conta conta = createContaInteractor.createConta(contaBusinessObj);
         return ResponseEntity.status(HttpStatus.CREATED).body(contaDTOMapper.toResponse(conta));
     }
 
@@ -79,14 +81,14 @@ public class ContaController {
 
         ContaFiltro filtro = new ContaFiltro(dataVencimento, descricao);
 
-        List<Conta> contasBusinnesObj = getAllContaInterector
+        List<Conta> contasBusinessObj = getAllContaInteractor
                 .getAllConta(
                         filtro,
                         pageable.getPageNumber(),
                         pageable.getPageSize());
 
         Page<ContaResponse> contas = new PageImpl<>(
-                contasBusinnesObj.stream()
+                contasBusinessObj.stream()
                         .map(contaDTOMapper::toResponse)
                         .toList()
         );
@@ -95,7 +97,7 @@ public class ContaController {
 
     @GetMapping("/{id}")
     ResponseEntity<ContaResponse> findById(@PathVariable Long id) {
-        Conta contaBusinnesObj = getByIdContaInterector.findById(id);
+        Conta contaBusinnesObj = getByIdContaInteractor.findById(id);
         return ResponseEntity.status(HttpStatus.OK).body(contaDTOMapper.toResponse(contaBusinnesObj));
 
     }
@@ -120,13 +122,13 @@ public class ContaController {
     @PutMapping("/{id}")
     ResponseEntity<ContaResponse> update(@PathVariable Long id, @RequestBody ContaRequest request) {
         Conta contaBusinnesObj = contaDTOMapper.toConta(request);
-        Conta conta = updateContaInterector.update(id, contaBusinnesObj);
+        Conta conta = updateContaInteractor.update(id, contaBusinnesObj);
         return ResponseEntity.status(HttpStatus.OK).body(contaDTOMapper.toResponse(conta));
     }
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(@PathVariable Long id) {
-        deleteContaInterector.delete(id);
+        deleteContaInteractor.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 

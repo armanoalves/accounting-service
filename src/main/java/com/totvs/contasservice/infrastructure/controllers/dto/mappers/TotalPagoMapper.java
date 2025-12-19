@@ -1,4 +1,4 @@
-package com.totvs.contasservice.infrastructure.controllers;
+package com.totvs.contasservice.infrastructure.controllers.dto.mappers;
 
 import com.totvs.contasservice.infrastructure.controllers.dto.TotalPagoResponse;
 

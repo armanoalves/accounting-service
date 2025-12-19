@@ -1,4 +1,4 @@
-package com.totvs.contasservice.application.usecases;
+package com.totvs.contasservice.application.usecases.conta;
 
 import com.totvs.contasservice.application.gateways.ContaGateway;
 import com.totvs.contasservice.application.ports.CsvContaParser;

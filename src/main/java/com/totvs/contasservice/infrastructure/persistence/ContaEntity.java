@@ -16,6 +16,7 @@ public class ContaEntity {
     private LocalDate dataPagamento;
     private Double valor;
     private String descricao;
+    @Enumerated(EnumType.STRING)
     private Situacao situacao;
 
     public ContaEntity(LocalDate dataVencimento, LocalDate dataPagamento, Double valor, String descricao, Situacao situacao) {

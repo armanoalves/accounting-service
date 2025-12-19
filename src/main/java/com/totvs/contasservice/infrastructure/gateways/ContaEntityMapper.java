@@ -6,11 +6,11 @@ import com.totvs.contasservice.infrastructure.persistence.ContaEntity;
 public class ContaEntityMapper {
     ContaEntity toEntity(Conta contaDomainObj) {
         return new ContaEntity(
-                contaDomainObj.dataVencimento(),
-                contaDomainObj.dataPagamento(),
-                contaDomainObj.valor(),
-                contaDomainObj.descricao(),
-                contaDomainObj.situacao()
+                contaDomainObj.getDataVencimento(),
+                contaDomainObj.getDataPagamento(),
+                contaDomainObj.getValor(),
+                contaDomainObj.getDescricao(),
+                contaDomainObj.getSituacao()
             );
     }
 

@@ -1,18 +1,18 @@
-package com.totvs.contasservice.infrastructure.controllers;
+package com.totvs.contasservice.infrastructure.controllers.dto.mappers;
 
 import com.totvs.contasservice.domain.entity.Conta;
 import com.totvs.contasservice.infrastructure.controllers.dto.ContaRequest;
 import com.totvs.contasservice.infrastructure.controllers.dto.ContaResponse;
 
 public class ContaDTOMapper {
-    ContaResponse toResponse(Conta conta) {
+    public ContaResponse toResponse(Conta conta) {
         return new ContaResponse(
-                conta.id(),
-                conta.dataVencimento(),
-                conta.dataPagamento(),
-                conta.valor(),
-                conta.descricao(),
-                conta.situacao()
+                conta.getId(),
+                conta.getDataVencimento(),
+                conta.getDataPagamento(),
+                conta.getValor(),
+                conta.getDescricao(),
+                conta.getSituacao()
         );
     }
 

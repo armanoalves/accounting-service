@@ -2,6 +2,7 @@ package com.totvs.contasservice.infrastructure.exceptionhandling;
 
 import com.totvs.contasservice.domain.exceptions.ContaNaoEncontradaException;
 import com.totvs.contasservice.domain.exceptions.CsvProcessingException;
+import com.totvs.contasservice.domain.exceptions.UsuarioNaoEncontradoException;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +33,12 @@ public class GlobalExceptionHanlder extends ResponseEntityExceptionHandler {
     public ResponseEntity<ErrorMessage> handleCsvError(CsvProcessingException ex) {
         ErrorMessage response = new ErrorMessage(HttpStatus.BAD_REQUEST, ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    @ExceptionHandler(UsuarioNaoEncontradoException.class)
+    public ResponseEntity<ErrorMessage> handleUsuarioNaoEncontrado(UsuarioNaoEncontradoException ex) {
+        ErrorMessage response = new ErrorMessage(HttpStatus.NOT_FOUND, ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 
 }
