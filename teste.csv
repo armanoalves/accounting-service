@@ -1,0 +1,6 @@
+dataVencimento,dataPagamento,valor,descricao,situacao
+2025-03-01,2025-03-02,100.00,Conta de luz,PAGO
+2025-03-05,2025-03-06,200.00,Conta de água,PAGO
+2025-03-10,,150.00,Conta de internet,ATRASADO
+2025-03-15,2025-03-16,300.00,Conta de telefone,PAGO
+2025-03-20,,250.00,Conta de gás,CANCELADO

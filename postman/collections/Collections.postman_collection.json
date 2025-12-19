@@ -226,7 +226,9 @@
             {
               "key": "file",
               "type": "file",
-              "src": "/C:/Users/arman/Documents/teste.csv"
+              "src": [
+                "/C:/Users/arman/Documents/teste.csv"
+              ]
             }
           ]
         },
@@ -415,7 +417,7 @@
   ],
   "variable": [
     {
-      "id": "21273330-9230-4d11-b282-20c70b2091a7",
+      "id": "69163ed5-9b5e-44db-ae3b-71d295edc8b4",
       "key": "baseURL",
       "value": "",
       "type": "default"
