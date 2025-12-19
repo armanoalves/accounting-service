@@ -50,16 +50,13 @@ public class ContaRepositoryGateway implements ContaGateway {
         Specification<ContaEntity> spec = (root, query, cb) -> cb.conjunction();
 
         if (filtro.dataVencimento() != null) {
-            spec = spec.and((root, query, cb) ->
-                    cb.equal(root.get("dataVencimento"), filtro.dataVencimento()));
+            spec = spec.and((root, query, cb) -> cb.equal(root.get("dataVencimento"), filtro.dataVencimento()));
         }
 
         if (filtro.descricao() != null && !filtro.descricao().isBlank()) {
-            spec = spec.and((root, query, cb) ->
-                    cb.like(
-                            cb.lower(root.get("descricao")),
-                            "%" + filtro.descricao().toLowerCase() + "%"
-                    ));
+            spec = spec.and((root, query, cb) -> cb.like(
+                    cb.lower(root.get("descricao")),
+                    "%" + filtro.descricao().toLowerCase() + "%"));
         }
         Page<ContaEntity> pageResult = contaRepository.findAll(spec, pageRequest);
         return pageResult.stream()
@@ -93,6 +90,14 @@ public class ContaRepositoryGateway implements ContaGateway {
 
         ContaEntity updatedConta = contaRepository.save(contaEntity);
 
+        return contaEntityMapper.toDomainObj(updatedConta);
+    }
+
+    @Override
+    public Conta updateSituacao(Long id, Situacao situacao) {
+        ContaEntity contaEntity = contaRepository.findById(id).orElseThrow(ContaNaoEncontradaException::new);
+        contaEntity.setSituacao(situacao);
+        ContaEntity updatedConta = contaRepository.save(contaEntity);
         return contaEntityMapper.toDomainObj(updatedConta);
     }
 

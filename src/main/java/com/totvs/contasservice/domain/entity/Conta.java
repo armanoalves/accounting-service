@@ -19,6 +19,8 @@ public class Conta {
         this.situacao = situacao;
     }
 
+    public Conta() {}
+
     public Long getId() {
         return id;
     }

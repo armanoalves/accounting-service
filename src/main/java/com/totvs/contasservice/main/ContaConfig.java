@@ -44,6 +44,11 @@ public class ContaConfig {
     }
 
     @Bean
+    UpdateSituacaoContaUseCase updateSituacaoContaUseCase(ContaGateway contaGateway) {
+        return new UpdateSituacaoContaInteractor(contaGateway);
+    }
+
+    @Bean
     DeleteContaUseCase deleteContaUseCase(ContaGateway contaGateway) {
         return new DeleteContaInteractor(contaGateway);
     }

@@ -4,6 +4,7 @@ import com.totvs.contasservice.application.usecases.conta.*;
 import com.totvs.contasservice.domain.entity.Conta;
 import com.totvs.contasservice.domain.entity.ContaFiltro;
 import com.totvs.contasservice.infrastructure.controllers.dto.ContaRequest;
+import com.totvs.contasservice.infrastructure.controllers.dto.UpdateSituacaoRequest;
 import com.totvs.contasservice.infrastructure.controllers.dto.ContaResponse;
 import com.totvs.contasservice.infrastructure.controllers.dto.TotalPagoResponse;
 import com.totvs.contasservice.infrastructure.controllers.dto.mappers.ContaDTOMapper;
@@ -33,6 +34,7 @@ public class ContaController {
     private final DeleteContaUseCase deleteContaUseCase;
     private final ImportContasFromCsvUseCase importContasFromCsvUseCase;
     private final GetValorTotalPagoPorPeriodoUseCase getValorTotalPagoPorPeriodoUseCase;
+    private final UpdateSituacaoContaUseCase updateSituacaoContaUseCase;
     private final ContaDTOMapper contaDTOMapper;
     private final TotalPagoMapper totalPagoMapper;
 
@@ -43,6 +45,7 @@ public class ContaController {
             DeleteContaUseCase deleteContaUseCase,
             ImportContasFromCsvUseCase importContasFromCsvUseCase,
             GetValorTotalPagoPorPeriodoUseCase getValorTotalPagoPorPeriodoUseCase,
+            UpdateSituacaoContaUseCase updateSituacaoContaUseCase,
             ContaDTOMapper contaDTOMapper, TotalPagoMapper totalPagoMapper) {
         this.createContaUseCase = createContaUseCase;
         this.getAllContaUseCase = getAllContaUseCase;
@@ -51,6 +54,7 @@ public class ContaController {
         this.deleteContaUseCase = deleteContaUseCase;
         this.importContasFromCsvUseCase = importContasFromCsvUseCase;
         this.getValorTotalPagoPorPeriodoUseCase = getValorTotalPagoPorPeriodoUseCase;
+        this.updateSituacaoContaUseCase = updateSituacaoContaUseCase;
         this.contaDTOMapper = contaDTOMapper;
         this.totalPagoMapper = totalPagoMapper;
     }
@@ -128,6 +132,13 @@ public class ContaController {
     ResponseEntity<Void> delete(@PathVariable Long id) {
         deleteContaUseCase.deleteConta(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PatchMapping("/{id}/situacao")
+    ResponseEntity<ContaResponse> updateSituacao(@PathVariable Long id,
+            @RequestBody @Valid UpdateSituacaoRequest request) {
+        Conta conta = updateSituacaoContaUseCase.updateSituacao(id, request.situacao());
+        return ResponseEntity.status(HttpStatus.OK).body(contaDTOMapper.toResponse(conta));
     }
 
 }

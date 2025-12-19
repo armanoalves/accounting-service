@@ -13,5 +13,6 @@ public interface ContaGateway {
     Conta findById(Long id);
     Double getValorTotalPagoPorPeriodo(LocalDate dataInicio, LocalDate dataFim);
     Conta update(Long id, Conta conta);
+    Conta updateSituacao(Long id, com.totvs.contasservice.domain.entity.Situacao situacao);
     void delete(Long id);
 }
