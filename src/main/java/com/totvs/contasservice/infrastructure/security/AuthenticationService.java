@@ -1,4 +1,4 @@
-package com.totvs.contasservice.infrastructure.gateways;
+package com.totvs.contasservice.infrastructure.security;
 
 import com.totvs.contasservice.infrastructure.persistence.UsuarioRepository;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -17,6 +17,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -43,14 +44,14 @@ public class UsuarioController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<UsuarioResponse> create(@RequestBody UsuarioRequest request) {
+    public ResponseEntity<UsuarioResponse> create(@RequestBody @Valid UsuarioRequest request) {
         Usuario usuarioBusinessObj = usuarioDTOMapper.toUsuario(request);
         Usuario usuario = createUsuarioUseCase.createUsuario(usuarioBusinessObj);
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioDTOMapper.toResponse(usuario));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
+    public ResponseEntity<LoginResponse> login(@RequestBody @Valid LoginRequest request) {
         var response = loginUseCase.login(request.email(), request.senha());
         return ResponseEntity.status(HttpStatus.OK).body(loginDTOMapper.toResponse(response));
     }

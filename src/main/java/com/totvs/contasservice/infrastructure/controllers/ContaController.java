@@ -16,6 +16,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
@@ -36,13 +37,13 @@ public class ContaController {
     private final TotalPagoMapper totalPagoMapper;
 
     public ContaController(CreateContaUseCase createContaUseCase,
-                           GetAllContaUseCase getAllContaUseCase,
-                           GetByIdContaUseCase getByIdContaUseCase,
-                           UpdateContaUseCase updateContaUseCase,
-                           DeleteContaUseCase deleteContaUseCase,
-                           ImportContasFromCsvUseCase importContasFromCsvUseCase,
-                           GetValorTotalPagoPorPeriodoUseCase getValorTotalPagoPorPeriodoUseCase,
-                           ContaDTOMapper contaDTOMapper, TotalPagoMapper totalPagoMapper) {
+            GetAllContaUseCase getAllContaUseCase,
+            GetByIdContaUseCase getByIdContaUseCase,
+            UpdateContaUseCase updateContaUseCase,
+            DeleteContaUseCase deleteContaUseCase,
+            ImportContasFromCsvUseCase importContasFromCsvUseCase,
+            GetValorTotalPagoPorPeriodoUseCase getValorTotalPagoPorPeriodoUseCase,
+            ContaDTOMapper contaDTOMapper, TotalPagoMapper totalPagoMapper) {
         this.createContaUseCase = createContaUseCase;
         this.getAllContaUseCase = getAllContaUseCase;
         this.getByIdContaUseCase = getByIdContaUseCase;
@@ -55,7 +56,7 @@ public class ContaController {
     }
 
     @PostMapping
-    ResponseEntity<ContaResponse> create(@RequestBody ContaRequest request) {
+    ResponseEntity<ContaResponse> create(@RequestBody @Valid ContaRequest request) {
         Conta contaBusinessObj = contaDTOMapper.toConta(request);
         Conta conta = createContaUseCase.createConta(contaBusinessObj);
         return ResponseEntity.status(HttpStatus.CREATED).body(contaDTOMapper.toResponse(conta));
@@ -89,8 +90,7 @@ public class ContaController {
         Page<ContaResponse> contas = new PageImpl<>(
                 contasBusinessObj.stream()
                         .map(contaDTOMapper::toResponse)
-                        .toList()
-        );
+                        .toList());
         return ResponseEntity.status(HttpStatus.OK).body(contas);
     }
 
@@ -117,11 +117,10 @@ public class ContaController {
         return ResponseEntity.status(HttpStatus.OK).body(totalPagoMapper.toResponse(inicio, fim, total));
     }
 
-
     @PutMapping("/{id}")
-    ResponseEntity<ContaResponse> update(@PathVariable Long id, @RequestBody ContaRequest request) {
+    ResponseEntity<ContaResponse> update(@PathVariable Long id, @RequestBody @Valid ContaRequest request) {
         Conta contaBusinnesObj = contaDTOMapper.toConta(request);
-        Conta conta = updateContaUseCase.UpdateConta(id, contaBusinnesObj);
+        Conta conta = updateContaUseCase.updateConta(id, contaBusinnesObj);
         return ResponseEntity.status(HttpStatus.OK).body(contaDTOMapper.toResponse(conta));
     }
 
