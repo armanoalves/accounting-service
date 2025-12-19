@@ -1,6 +1,6 @@
 dataVencimento,dataPagamento,valor,descricao,situacao
-2025-03-01,2025-03-02,100.00,Conta de luz,PAGO
-2025-03-05,2025-03-06,200.00,Conta de água,PAGO
-2025-03-10,,150.00,Conta de internet,ATRASADO
-2025-03-15,2025-03-16,300.00,Conta de telefone,PAGO
-2025-03-20,,250.00,Conta de gás,CANCELADO
+2025-04-01,2025-04-02,150.00,Energia Elétrica,PAGO
+2025-04-05,2025-04-05,300.50,Supermercado,PAGO
+2025-04-10,,120.00,Internet,PENDENTE
+2025-04-15,,500.00,Aluguel,PENDENTE
+2025-04-20,,80.00,Gás,CANCELADO

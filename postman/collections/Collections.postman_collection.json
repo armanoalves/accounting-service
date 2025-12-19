@@ -376,7 +376,7 @@
       "response": []
     },
     {
-      "name": "Atualizar Situação",
+      "name": "Atualizar Situação da Conta",
       "id": "61fc2430-cf25-479a-a0d2-4ab7e65a2a47",
       "request": {
         "auth": {

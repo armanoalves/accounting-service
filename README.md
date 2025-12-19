@@ -36,7 +36,7 @@ Execute o comando abaixo na raiz do projeto para subir a aplicação e o banco d
 docker-compose up -d --build
 ```
 
-A API estará disponível em: `http://localhost:8081`
+A API estará disponível em: `http://localhost:8080`
 
 ### Localmente (Maven)
 1.  Garanta que um PostgreSQL esteja rodando na porta `5432` (db: `appdb`, user: `appuser`, pass: `apppassword`).
@@ -50,6 +50,7 @@ A API estará disponível em: `http://localhost:8081`
 ### Autenticação (`/usuarios`)
 *   `POST /usuarios/create`: Criar novo usuário (Requer email, senha, role).
 *   `POST /usuarios/login`: Autenticar e obter Token JWT.
+*   `GET  /usuarios`: Busca todos os usuários criados.
 
 ### Contas (`/contas`)
 **Nota**: A maioria dos endpoints requer Autenticação (Header `Authorization: Bearer <token>`).
@@ -59,8 +60,11 @@ A API estará disponível em: `http://localhost:8081`
 *   `GET /contas`: Listar contas com paginação e filtros (dataVencimento, descricao).
 *   `GET /contas/{id}`: Detalhes de uma conta.
 *   `PUT /contas/{id}`: Atualizar conta.
+*   `PATCH /contas/{id}/situacao`: Atualizar apenas a situação da conta.
 *   `DELETE /contas/{id}`: Remover conta.
 *   `GET /contas/total-pago`: Obter valor total pago em um período (query params: `inicio`, `fim`).
+
+Para ajudar nos testes de rota foi desenvolvido uma collection que pode ser encontrada dentro da pasta postman na raiz do projeto.
 
 ## ✅ Validações e Erros
 
