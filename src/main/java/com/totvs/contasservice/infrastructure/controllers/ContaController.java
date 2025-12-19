@@ -1,11 +1,14 @@
 package com.totvs.contasservice.infrastructure.controllers;
 
-import com.totvs.contasservice.application.usecases.*;
+import com.totvs.contasservice.application.usecases.conta.*;
 import com.totvs.contasservice.domain.entity.Conta;
 import com.totvs.contasservice.domain.entity.ContaFiltro;
 import com.totvs.contasservice.infrastructure.controllers.dto.ContaRequest;
+import com.totvs.contasservice.infrastructure.controllers.dto.UpdateSituacaoRequest;
 import com.totvs.contasservice.infrastructure.controllers.dto.ContaResponse;
 import com.totvs.contasservice.infrastructure.controllers.dto.TotalPagoResponse;
+import com.totvs.contasservice.infrastructure.controllers.dto.mappers.ContaDTOMapper;
+import com.totvs.contasservice.infrastructure.controllers.dto.mappers.TotalPagoMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -14,6 +17,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
@@ -23,46 +27,48 @@ import java.util.List;
 @RequestMapping("contas")
 public class ContaController {
 
-    private final CreateContaInterector createContaInterector;
-    private final GetAllContaInterector getAllContaInterector;
-    private final GetByIdContaInterector getByIdContaInterector;
-    private final UpdateContaInterector updateContaInterector;
-    private final DeleteContaInterector deleteContaInterector;
-    private final ImportContasFromCsvInteractor importContasFromCsvInteractor;
-    private final GetValorTotalPagoPorPeriodoInteractor getValorTotalPagoPorPeriodoInteractor;
+    private final CreateContaUseCase createContaUseCase;
+    private final GetAllContaUseCase getAllContaUseCase;
+    private final GetByIdContaUseCase getByIdContaUseCase;
+    private final UpdateContaUseCase updateContaUseCase;
+    private final DeleteContaUseCase deleteContaUseCase;
+    private final ImportContasFromCsvUseCase importContasFromCsvUseCase;
+    private final GetValorTotalPagoPorPeriodoUseCase getValorTotalPagoPorPeriodoUseCase;
+    private final UpdateSituacaoContaUseCase updateSituacaoContaUseCase;
     private final ContaDTOMapper contaDTOMapper;
     private final TotalPagoMapper totalPagoMapper;
 
-    public ContaController(CreateContaInterector createContaInterector,
-                           ContaDTOMapper contaDTOMapper,
-                           TotalPagoMapper totalPagoMapper,
-                           GetAllContaInterector getAllContaInterector,
-                           GetByIdContaInterector getByIdContaInterector,
-                           UpdateContaInterector updateContaInterector,
-                           DeleteContaInterector deleteContaInterector,
-                           ImportContasFromCsvInteractor importContasFromCsvInteractor,
-                           GetValorTotalPagoPorPeriodoInteractor getValorTotalPagoPorPeriodoInteractor) {
-        this.createContaInterector = createContaInterector;
-        this.getAllContaInterector = getAllContaInterector;
-        this.getByIdContaInterector = getByIdContaInterector;
-        this.updateContaInterector = updateContaInterector;
-        this.deleteContaInterector = deleteContaInterector;
-        this.importContasFromCsvInteractor = importContasFromCsvInteractor;
-        this.getValorTotalPagoPorPeriodoInteractor = getValorTotalPagoPorPeriodoInteractor;
+    public ContaController(CreateContaUseCase createContaUseCase,
+            GetAllContaUseCase getAllContaUseCase,
+            GetByIdContaUseCase getByIdContaUseCase,
+            UpdateContaUseCase updateContaUseCase,
+            DeleteContaUseCase deleteContaUseCase,
+            ImportContasFromCsvUseCase importContasFromCsvUseCase,
+            GetValorTotalPagoPorPeriodoUseCase getValorTotalPagoPorPeriodoUseCase,
+            UpdateSituacaoContaUseCase updateSituacaoContaUseCase,
+            ContaDTOMapper contaDTOMapper, TotalPagoMapper totalPagoMapper) {
+        this.createContaUseCase = createContaUseCase;
+        this.getAllContaUseCase = getAllContaUseCase;
+        this.getByIdContaUseCase = getByIdContaUseCase;
+        this.updateContaUseCase = updateContaUseCase;
+        this.deleteContaUseCase = deleteContaUseCase;
+        this.importContasFromCsvUseCase = importContasFromCsvUseCase;
+        this.getValorTotalPagoPorPeriodoUseCase = getValorTotalPagoPorPeriodoUseCase;
+        this.updateSituacaoContaUseCase = updateSituacaoContaUseCase;
         this.contaDTOMapper = contaDTOMapper;
         this.totalPagoMapper = totalPagoMapper;
     }
 
     @PostMapping
-    ResponseEntity<ContaResponse> create(@RequestBody ContaRequest request) {
+    ResponseEntity<ContaResponse> create(@RequestBody @Valid ContaRequest request) {
         Conta contaBusinessObj = contaDTOMapper.toConta(request);
-        Conta conta = createContaInterector.createConta(contaBusinessObj);
+        Conta conta = createContaUseCase.createConta(contaBusinessObj);
         return ResponseEntity.status(HttpStatus.CREATED).body(contaDTOMapper.toResponse(conta));
     }
 
     @PostMapping("/import")
     public ResponseEntity<List<ContaResponse>> importCsv(@RequestParam("file") MultipartFile file) {
-        List<Conta> contasCriadas = importContasFromCsvInteractor.importCsv(file);
+        List<Conta> contasCriadas = importContasFromCsvUseCase.importCsv(file);
 
         List<ContaResponse> response = contasCriadas.stream()
                 .map(contaDTOMapper::toResponse)
@@ -79,23 +85,22 @@ public class ContaController {
 
         ContaFiltro filtro = new ContaFiltro(dataVencimento, descricao);
 
-        List<Conta> contasBusinnesObj = getAllContaInterector
+        List<Conta> contasBusinessObj = getAllContaUseCase
                 .getAllConta(
                         filtro,
                         pageable.getPageNumber(),
                         pageable.getPageSize());
 
         Page<ContaResponse> contas = new PageImpl<>(
-                contasBusinnesObj.stream()
+                contasBusinessObj.stream()
                         .map(contaDTOMapper::toResponse)
-                        .toList()
-        );
+                        .toList());
         return ResponseEntity.status(HttpStatus.OK).body(contas);
     }
 
     @GetMapping("/{id}")
     ResponseEntity<ContaResponse> findById(@PathVariable Long id) {
-        Conta contaBusinnesObj = getByIdContaInterector.findById(id);
+        Conta contaBusinnesObj = getByIdContaUseCase.getById(id);
         return ResponseEntity.status(HttpStatus.OK).body(contaDTOMapper.toResponse(contaBusinnesObj));
 
     }
@@ -112,22 +117,28 @@ public class ContaController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
-        Double total = getValorTotalPagoPorPeriodoInteractor.execute(inicio, fim);
+        Double total = getValorTotalPagoPorPeriodoUseCase.execute(inicio, fim);
         return ResponseEntity.status(HttpStatus.OK).body(totalPagoMapper.toResponse(inicio, fim, total));
     }
 
-
     @PutMapping("/{id}")
-    ResponseEntity<ContaResponse> update(@PathVariable Long id, @RequestBody ContaRequest request) {
+    ResponseEntity<ContaResponse> update(@PathVariable Long id, @RequestBody @Valid ContaRequest request) {
         Conta contaBusinnesObj = contaDTOMapper.toConta(request);
-        Conta conta = updateContaInterector.update(id, contaBusinnesObj);
+        Conta conta = updateContaUseCase.updateConta(id, contaBusinnesObj);
         return ResponseEntity.status(HttpStatus.OK).body(contaDTOMapper.toResponse(conta));
     }
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(@PathVariable Long id) {
-        deleteContaInterector.delete(id);
+        deleteContaUseCase.deleteConta(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PatchMapping("/{id}/situacao")
+    ResponseEntity<ContaResponse> updateSituacao(@PathVariable Long id,
+            @RequestBody @Valid UpdateSituacaoRequest request) {
+        Conta conta = updateSituacaoContaUseCase.updateSituacao(id, request.situacao());
+        return ResponseEntity.status(HttpStatus.OK).body(contaDTOMapper.toResponse(conta));
     }
 
 }

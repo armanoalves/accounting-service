@@ -3,7 +3,7 @@ package com.totvs.contasservice.infrastructure.csv;
 import com.totvs.contasservice.application.ports.CsvContaParser;
 import com.totvs.contasservice.domain.entity.Conta;
 import com.totvs.contasservice.domain.entity.Situacao;
-import com.totvs.contasservice.domain.exceptions.CsvProcessingException;
+import com.totvs.contasservice.domain.exceptions.ProcessamentoCsvException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,7 +26,7 @@ public class CsvContaParserImpl implements CsvContaParser {
                     .toList();
 
         } catch (Exception e) {
-            throw new CsvProcessingException("Erro ao processar CSV: " + e.getMessage());
+            throw new ProcessamentoCsvException("Erro ao processar CSV: " + e.getMessage());
         }
     }
 

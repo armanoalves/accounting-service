@@ -1,0 +1,426 @@
+{
+  "info": {
+    "_postman_id": "d361c207-09c2-49bb-aed9-8215dd731fc3",
+    "name": "Collections",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Criar conta",
+      "id": "d1c5a697-b133-41b8-9404-0432591234eb",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBUEkgZG8gc2VydmnDp28gZGUgZ2VyZW5jaWFtZW50byBkZSBjb250YXMgYSBwYWdhciIsInN1YiI6InVzdWFyaW9AZW1haWwuY29tIiwiZXhwIjoxNzY2MjUwMTE5fQ._w4rtyIXT-k_zSFujlkt9dT1yab4BtA5fhRY1zasbcA",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"dataVencimento\": \"2025-03-31\",\r\n  \"dataPagamento\": null,\r\n  \"valor\": 1500.50,\r\n  \"descricao\": \"Pagamento de mensalidade\",\r\n  \"situacao\": \"PAGO\"\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseURL}}/contas",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "contas"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Buscar todas contas",
+      "id": "6464de20-698b-4a79-b312-409e102cfc47",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBUEkgZG8gc2VydmnDp28gZGUgZ2VyZW5jaWFtZW50byBkZSBjb250YXMgYSBwYWdhciIsInN1YiI6InVzdWFyaW9AZW1haWwuY29tIiwiZXhwIjoxNzY2MjUwMTE5fQ._w4rtyIXT-k_zSFujlkt9dT1yab4BtA5fhRY1zasbcA",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseURL}}/contas",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "contas"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Buscar todas contas - com filtro",
+      "id": "20e6c711-f2be-43dd-a750-23421178bef8",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBUEkgZG8gc2VydmnDp28gZGUgZ2VyZW5jaWFtZW50byBkZSBjb250YXMgYSBwYWdhciIsInN1YiI6InVzdWFyaW9AZW1haWwuY29tIiwiZXhwIjoxNzY2MjUwMTE5fQ._w4rtyIXT-k_zSFujlkt9dT1yab4BtA5fhRY1zasbcA",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseURL}}/contas?dataVencimento=2025-03-31",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "contas"
+          ],
+          "query": [
+            {
+              "key": "dataVencimento",
+              "value": "2025-03-31"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Buscar conta por ID",
+      "id": "0a9a0910-5baa-4ec9-b7ed-26f7ad422413",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBUEkgZG8gc2VydmnDp28gZGUgZ2VyZW5jaWFtZW50byBkZSBjb250YXMgYSBwYWdhciIsInN1YiI6InVzdWFyaW9AZW1haWwuY29tIiwiZXhwIjoxNzY2MjUwMTE5fQ._w4rtyIXT-k_zSFujlkt9dT1yab4BtA5fhRY1zasbcA",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseURL}}/contas/2",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "contas",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Atualizar conta",
+      "id": "dca895d4-fd4d-4513-a0a9-cca16ad053c5",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBUEkgZG8gc2VydmnDp28gZGUgZ2VyZW5jaWFtZW50byBkZSBjb250YXMgYSBwYWdhciIsInN1YiI6InVzdWFyaW9AZW1haWwuY29tIiwiZXhwIjoxNzY2MjUwMTE5fQ._w4rtyIXT-k_zSFujlkt9dT1yab4BtA5fhRY1zasbcA",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"dataVencimento\": \"2025-01-31\",\r\n  \"dataPagamento\": null,\r\n  \"valor\": 3500.00,\r\n  \"descricao\": \"Pagamento do cartão\",\r\n  \"situacao\": \"PAGO\"\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseURL}}/contas/1",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "contas",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Deletar conta",
+      "id": "44fb2055-36ed-4cb0-9a3a-893c273f96b7",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBUEkgZG8gc2VydmnDp28gZGUgZ2VyZW5jaWFtZW50byBkZSBjb250YXMgYSBwYWdhciIsInN1YiI6InVzdWFyaW9AZW1haWwuY29tIiwiZXhwIjoxNzY2MjUwMTE5fQ._w4rtyIXT-k_zSFujlkt9dT1yab4BtA5fhRY1zasbcA",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{baseURL}}/contas/3",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "contas",
+            "3"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Import CSV",
+      "id": "42c579ba-0468-449d-a125-442f8d7c350e",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBUEkgZG8gc2VydmnDp28gZGUgZ2VyZW5jaWFtZW50byBkZSBjb250YXMgYSBwYWdhciIsInN1YiI6InVzdWFyaW9AZW1haWwuY29tIiwiZXhwIjoxNzY2MjUwMTE5fQ._w4rtyIXT-k_zSFujlkt9dT1yab4BtA5fhRY1zasbcA",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "file",
+              "type": "file",
+              "src": [
+                "/C:/Users/arman/Documents/teste.csv"
+              ]
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{baseURL}}/contas/import",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "contas",
+            "import"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Total de contas Pagas em um período",
+      "id": "405eaf20-e0d5-4416-a243-2acc81c3c330",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBUEkgZG8gc2VydmnDp28gZGUgZ2VyZW5jaWFtZW50byBkZSBjb250YXMgYSBwYWdhciIsInN1YiI6InVzdWFyaW9AZW1haWwuY29tIiwiZXhwIjoxNzY2MjUwMTE5fQ._w4rtyIXT-k_zSFujlkt9dT1yab4BtA5fhRY1zasbcA",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseURL}}/contas/total-pago?inicio=2025-03-01&fim=2025-03-20",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "contas",
+            "total-pago"
+          ],
+          "query": [
+            {
+              "key": "inicio",
+              "value": "2025-03-01"
+            },
+            {
+              "key": "fim",
+              "value": "2025-03-20"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Criar usuário",
+      "id": "8e10d34d-82d1-4f1f-a12d-0e118de18121",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"email\":\"usuario@email.com\",\r\n    \"senha\":\"senha1234\",\r\n    \"role\":\"USER\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseURL}}/usuarios/create",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "usuarios",
+            "create"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Login",
+      "id": "8e3740c2-9130-4615-8a85-ba6097808cb6",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"email\":\"usuario@email.com\",\r\n    \"senha\":\"senha1234\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseURL}}/usuarios/login",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "usuarios",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Buscar todos usuários",
+      "id": "51750917-ac02-4883-8c19-dbb46a6aa109",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBUEkgZG8gc2VydmnDp28gZGUgZ2VyZW5jaWFtZW50byBkZSBjb250YXMgYSBwYWdhciIsInN1YiI6InVzdWFyaW9AZW1haWwuY29tIiwiZXhwIjoxNzY2MjUwMTE5fQ._w4rtyIXT-k_zSFujlkt9dT1yab4BtA5fhRY1zasbcA",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{baseURL}}/usuarios",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "usuarios"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Atualizar Situação da Conta",
+      "id": "61fc2430-cf25-479a-a0d2-4ab7e65a2a47",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBUEkgZG8gc2VydmnDp28gZGUgZ2VyZW5jaWFtZW50byBkZSBjb250YXMgYSBwYWdhciIsInN1YiI6InVzdWFyaW9AZW1haWwuY29tIiwiZXhwIjoxNzY2MjUwMTE5fQ._w4rtyIXT-k_zSFujlkt9dT1yab4BtA5fhRY1zasbcA",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"situacao\": \"CANCELADO\"\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseURL}}/contas/1/situacao",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "contas",
+            "1",
+            "situacao"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "id": "69163ed5-9b5e-44db-ae3b-71d295edc8b4",
+      "key": "baseURL",
+      "value": "",
+      "type": "default"
+    }
+  ]
+}

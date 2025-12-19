@@ -24,14 +24,23 @@ services:
   # Application image
   app:
     build: .
-    container_name: bills-service
+    container_name: contas-service
     ports:
-      - "8081:8083"
+      - "8080:8080"
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres_app:5432/appdb
-      SPRING_DATASOURCE_URL_FLYWAY: jdbc:postgresql://postgres_app:5432/appdb
+      SPRING_DATASOURCE_URL_FLYWAY:
       SPRING_DATASOURCE_USERNAME: appuser
       SPRING_DATASOURCE_PASSWORD: apppassword
+
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: "true"
+      SPRING_JPA_SHOW_SQL: "false"
+
+      SPRING_FLYWAY_ENABLED: "true"
+      SPRING_FLYWAY_URL: jdbc:postgresql://postgres_app:5432/appdb
+      SPRING_FLYWAY_USER: appuser
+      SPRING_FLYWAY_PASSWORD: apppassword
     networks:
       - app-network
     depends_on:

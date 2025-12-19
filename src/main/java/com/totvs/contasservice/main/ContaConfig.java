@@ -1,46 +1,76 @@
 package com.totvs.contasservice.main;
 
 import com.totvs.contasservice.application.gateways.ContaGateway;
+import com.totvs.contasservice.application.gateways.UsuarioGateway;
 import com.totvs.contasservice.application.ports.CsvContaParser;
-import com.totvs.contasservice.application.usecases.*;
-import com.totvs.contasservice.infrastructure.controllers.ContaDTOMapper;
-import com.totvs.contasservice.infrastructure.controllers.TotalPagoMapper;
+import com.totvs.contasservice.application.usecases.conta.*;
+import com.totvs.contasservice.application.usecases.usuario.*;
+import com.totvs.contasservice.infrastructure.controllers.dto.mappers.ContaDTOMapper;
+import com.totvs.contasservice.infrastructure.controllers.dto.mappers.LoginDTOMapper;
+import com.totvs.contasservice.infrastructure.controllers.dto.mappers.TotalPagoMapper;
+import com.totvs.contasservice.infrastructure.controllers.dto.mappers.UsuarioDTOMapper;
 import com.totvs.contasservice.infrastructure.gateways.ContaEntityMapper;
 import com.totvs.contasservice.infrastructure.gateways.ContaRepositoryGateway;
+import com.totvs.contasservice.infrastructure.gateways.UsuarioEntityMapper;
+import com.totvs.contasservice.infrastructure.gateways.UsuarioRepositoryGateway;
 import com.totvs.contasservice.infrastructure.persistence.ContaRepository;
+import com.totvs.contasservice.infrastructure.persistence.UsuarioRepository;
+import com.totvs.contasservice.infrastructure.security.JwtTokenService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class ContaConfig {
     @Bean
-    CreateContaInterector createUseCase(ContaGateway contaGateway) {
-        return new CreateContaInterector(contaGateway);
+    CreateContaUseCase createContaUseCase(ContaGateway contaGateway) {
+        return new CreateContaInteractor(contaGateway);
     }
 
     @Bean
-    GetAllContaInterector getAllUseCase(ContaGateway contaGateway) {
-        return new GetAllContaInterector((contaGateway));
+    GetAllContaUseCase getAllContaUseCase(ContaGateway contaGateway) {
+        return new GetAllContaInteractor((contaGateway));
     }
 
     @Bean
-    GetByIdContaInterector getByIdUseCase(ContaGateway contaGateway) {
-        return new GetByIdContaInterector(contaGateway);
+    GetByIdContaUseCase getByIdContaUseCase(ContaGateway contaGateway) {
+        return new GetByIdContaInteractor(contaGateway);
     }
 
     @Bean
-    UpdateContaInterector updateUseCase(ContaGateway contaGateway) {
-        return new UpdateContaInterector(contaGateway);
+    UpdateContaUseCase updateContaUseCase(ContaGateway contaGateway) {
+        return new UpdateContaInteractor(contaGateway);
     }
 
     @Bean
-    DeleteContaInterector deleteUseCase(ContaGateway contaGateway) {
-        return new DeleteContaInterector(contaGateway);
+    UpdateSituacaoContaUseCase updateSituacaoContaUseCase(ContaGateway contaGateway) {
+        return new UpdateSituacaoContaInteractor(contaGateway);
     }
 
     @Bean
-    ImportContasFromCsvInteractor ImportCsvUseCase(ContaGateway contaGateway, CsvContaParser contaParser) {
+    DeleteContaUseCase deleteContaUseCase(ContaGateway contaGateway) {
+        return new DeleteContaInteractor(contaGateway);
+    }
+
+    @Bean
+    ImportContasFromCsvUseCase ImportCsvUseCase(ContaGateway contaGateway, CsvContaParser contaParser) {
         return new ImportContasFromCsvInteractor(contaParser, contaGateway);
+    }
+
+    @Bean
+    CreateUsuarioUseCase createUsuarioUseCase(UsuarioGateway usuarioGateway) {
+        return new CreateUsuarioInteractor(usuarioGateway);
+    }
+
+    @Bean
+    GetAllUsuarioUseCase getAllUsuarioUseCase(UsuarioGateway usuarioGateway) {
+        return new GetAllUsuarioInteractor(usuarioGateway);
+    }
+
+    @Bean
+    LoginUseCase loginUseCase(UsuarioGateway usuarioGateway) {
+        return new LoginInteractor(usuarioGateway);
     }
 
     @Bean
@@ -54,13 +84,38 @@ public class ContaConfig {
     }
 
     @Bean
+    UsuarioGateway usuarioGateway(UsuarioRepository usuarioRepository,
+            PasswordEncoder passwordEncoder,
+            UsuarioEntityMapper usuarioEntityMapper,
+            AuthenticationManager authenticationManager,
+            JwtTokenService jwtTokenService) {
+        return new UsuarioRepositoryGateway(usuarioRepository, passwordEncoder, usuarioEntityMapper,
+                authenticationManager, jwtTokenService);
+    }
+
+    @Bean
     ContaEntityMapper contaEntityMapper() {
         return new ContaEntityMapper();
     }
 
     @Bean
+    UsuarioEntityMapper usuarioEntityMapper() {
+        return new UsuarioEntityMapper();
+    }
+
+    @Bean
     ContaDTOMapper contaDTOMapper() {
         return new ContaDTOMapper();
+    }
+
+    @Bean
+    UsuarioDTOMapper usuarioDTOMapper() {
+        return new UsuarioDTOMapper();
+    }
+
+    @Bean
+    LoginDTOMapper loginDTOMapper() {
+        return new LoginDTOMapper();
     }
 
     @Bean

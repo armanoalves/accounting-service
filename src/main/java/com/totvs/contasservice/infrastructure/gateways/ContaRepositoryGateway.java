@@ -50,16 +50,13 @@ public class ContaRepositoryGateway implements ContaGateway {
         Specification<ContaEntity> spec = (root, query, cb) -> cb.conjunction();
 
         if (filtro.dataVencimento() != null) {
-            spec = spec.and((root, query, cb) ->
-                    cb.equal(root.get("dataVencimento"), filtro.dataVencimento()));
+            spec = spec.and((root, query, cb) -> cb.equal(root.get("dataVencimento"), filtro.dataVencimento()));
         }
 
         if (filtro.descricao() != null && !filtro.descricao().isBlank()) {
-            spec = spec.and((root, query, cb) ->
-                    cb.like(
-                            cb.lower(root.get("descricao")),
-                            "%" + filtro.descricao().toLowerCase() + "%"
-                    ));
+            spec = spec.and((root, query, cb) -> cb.like(
+                    cb.lower(root.get("descricao")),
+                    "%" + filtro.descricao().toLowerCase() + "%"));
         }
         Page<ContaEntity> pageResult = contaRepository.findAll(spec, pageRequest);
         return pageResult.stream()
@@ -85,14 +82,22 @@ public class ContaRepositoryGateway implements ContaGateway {
     public Conta update(Long id, Conta conta) {
         ContaEntity contaEntity = contaRepository.findById(id).orElseThrow(ContaNaoEncontradaException::new);
 
-        contaEntity.setDataVencimento(conta.dataVencimento());
-        contaEntity.setDataPagamento(conta.dataPagamento());
-        contaEntity.setValor(conta.valor());
-        contaEntity.setDescricao(conta.descricao());
-        contaEntity.setSituacao(conta.situacao());
+        contaEntity.setDataVencimento(conta.getDataVencimento());
+        contaEntity.setDataPagamento(conta.getDataPagamento());
+        contaEntity.setValor(conta.getValor());
+        contaEntity.setDescricao(conta.getDescricao());
+        contaEntity.setSituacao(conta.getSituacao());
 
         ContaEntity updatedConta = contaRepository.save(contaEntity);
 
+        return contaEntityMapper.toDomainObj(updatedConta);
+    }
+
+    @Override
+    public Conta updateSituacao(Long id, Situacao situacao) {
+        ContaEntity contaEntity = contaRepository.findById(id).orElseThrow(ContaNaoEncontradaException::new);
+        contaEntity.setSituacao(situacao);
+        ContaEntity updatedConta = contaRepository.save(contaEntity);
         return contaEntityMapper.toDomainObj(updatedConta);
     }
 
