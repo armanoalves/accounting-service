@@ -5,7 +5,7 @@ import com.totvs.contasservice.domain.entity.Usuario;
 
 import java.util.List;
 
-public class GetAllUsuarioInteractor {
+public class GetAllUsuarioInteractor implements GetAllUsuarioUseCase {
     private final UsuarioGateway usuarioGateway;
 
     public GetAllUsuarioInteractor(UsuarioGateway usuarioGateway) {

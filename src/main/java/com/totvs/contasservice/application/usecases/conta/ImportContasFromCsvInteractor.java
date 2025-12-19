@@ -7,7 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-public class ImportContasFromCsvInteractor {
+public class ImportContasFromCsvInteractor implements ImportContasFromCsvUseCase{
 
     private final CsvContaParser parser;
     private final ContaGateway contaGateway;

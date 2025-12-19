@@ -4,7 +4,7 @@ import com.totvs.contasservice.application.gateways.ContaGateway;
 
 import java.time.LocalDate;
 
-public class GetValorTotalPagoPorPeriodoInteractor {
+public class GetValorTotalPagoPorPeriodoInteractor implements GetValorTotalPagoPorPeriodoUseCase{
 
     private final ContaGateway contaGateway;
 

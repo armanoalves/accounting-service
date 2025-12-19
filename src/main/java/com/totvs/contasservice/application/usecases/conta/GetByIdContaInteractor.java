@@ -3,7 +3,7 @@ package com.totvs.contasservice.application.usecases.conta;
 import com.totvs.contasservice.application.gateways.ContaGateway;
 import com.totvs.contasservice.domain.entity.Conta;
 
-public class GetByIdContaInteractor {
+public class GetByIdContaInteractor implements GetByIdContaUseCase{
 
     private final ContaGateway contaGateWay;
 
@@ -11,7 +11,7 @@ public class GetByIdContaInteractor {
         this.contaGateWay = contaGateWay;
     }
 
-    public Conta findById(Long id) {
+    public Conta getById(Long id) {
         return contaGateWay.findById(id);
     }
 }

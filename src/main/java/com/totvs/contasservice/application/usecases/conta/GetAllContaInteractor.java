@@ -6,7 +6,7 @@ import com.totvs.contasservice.domain.entity.ContaFiltro;
 
 import java.util.List;
 
-public class GetAllContaInteractor {
+public class GetAllContaInteractor implements GetAllContaUseCase {
 
     private final ContaGateway contaGateway;
 

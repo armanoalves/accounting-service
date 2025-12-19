@@ -3,7 +3,7 @@ package com.totvs.contasservice.application.usecases.conta;
 import com.totvs.contasservice.application.gateways.ContaGateway;
 import com.totvs.contasservice.domain.entity.Conta;
 
-public class CreateContaInteractor {
+public class CreateContaInteractor implements CreateContaUseCase{
 
     private final ContaGateway contaGateway;
 

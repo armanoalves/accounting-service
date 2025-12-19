@@ -2,7 +2,7 @@ package com.totvs.contasservice.application.usecases.usuario;
 
 import com.totvs.contasservice.application.gateways.UsuarioGateway;
 
-public class LoginInteractor {
+public class LoginInteractor implements LoginUseCase {
 
     private final UsuarioGateway usuarioGateway;
 
